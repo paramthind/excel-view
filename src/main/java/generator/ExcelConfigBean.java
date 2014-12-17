@@ -1,11 +1,23 @@
 package generator;
 
+import java.util.List;
+
 /**
  * Created by paramveersingh on 12/16/14.
  */
 public class ExcelConfigBean {
     private String titleFont = "Tahoma", subTitleFont = "Tahoma", normalFont = "Tahoma";
     private float titleFontSize = 18, normalFontSize = 8;
+
+    public List<GroupConfigurationBean> getGroupConfigurations() {
+        return groupConfigurations;
+    }
+
+    public void setGroupConfigurations(List<GroupConfigurationBean> groupConfigurations) {
+        this.groupConfigurations = groupConfigurations;
+    }
+
+    private List<GroupConfigurationBean> groupConfigurations;
 
     public String getTitleFont() {
         return titleFont;
