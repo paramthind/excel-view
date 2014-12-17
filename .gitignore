@@ -1,0 +1,22 @@
+# /
+.DS_Store
+
+#*.jar
+
+#
+target/
+out/
+
+
+#intellij
+.idea/
+*.iml
+
+#eclipse
+.classpath
+.settings
+
+
+#log
+log
+/bin/
