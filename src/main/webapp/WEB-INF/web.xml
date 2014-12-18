@@ -56,19 +56,4 @@
 	<listener>
 		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
 	</listener>
-
-	<!-- file servlet to download file -->
-	<servlet>
-		<servlet-name>FileServlet</servlet-name>
-		<servlet-class>servlet.FileServlet</servlet-class>
-		<init-param>
-			<param-name>excel_directory</param-name>
-			<param-value>/Users/paramveersingh/Documents</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>FileServlet</servlet-name>
-		<url-pattern>/fetchFile</url-pattern>
-	</servlet-mapping>
 </web-app>

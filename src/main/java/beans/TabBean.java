@@ -8,15 +8,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 @ManagedBean(name = "tabBean")
 @SessionScoped
 public class TabBean {
 
-    private String userName1="Babu";
-    private String address="USA";
+    private String userName1 = "Babu";
+    private String address = "USA";
 
 
     public String getAddress() {
@@ -35,28 +34,26 @@ public class TabBean {
         this.userName1 = userName1;
     }
 
-    public StreamedContent getExcelFile(){
-
-
+    public StreamedContent getExcelFile() {
         String outFile = "tmpfile.xml";
         File file1 = null;
         try {
-        ExcelGenerator excelGenerator = new ExcelGenerator(
-                this.getClass().getClassLoader().getResource("tabConfig.xml").getFile(),
-                outFile);
-        excelGenerator.include(new TabBean());
-        excelGenerator.generate();
+            //generate excel file
+            ExcelGenerator excelGenerator = new ExcelGenerator(
+                    this.getClass().getClassLoader().getResource("tabConfig.xml").getFile(),
+                    outFile);
+            excelGenerator.include(new TabBean());
+            excelGenerator.generate();
 
-        file1 = new File(outFile);
-        InputStream stream = null;
+            //fetch file for download
+            file1 = new File(outFile);
+            InputStream stream = new FileInputStream(file1);
+            return new DefaultStreamedContent(stream, "application/vnd.ms-excel", "downloaded_optimus.xls");
 
-            stream = new FileInputStream(file1);
-
-        return new DefaultStreamedContent(stream, "application/vnd.ms-excel", "downloaded_optimus.xls");
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if (file1 != null && file1.exists()){
+        } finally {
+            if (file1 != null && file1.exists()) {
                 file1.delete();
             }
         }

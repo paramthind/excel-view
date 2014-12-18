@@ -19,9 +19,5 @@
 	<p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
 		<p:fileDownload value="#{tabBean.excelFile}" />
 	</p:commandButton>
-
-	<h:outputLink id="downloadLink" value="#{request.contextPath}/fetchFile?filename=tabWorkbook.xls" >
-		<h:outputText value="Download"></h:outputText>
-	</h:outputLink>
 </h:form>
 </html>
