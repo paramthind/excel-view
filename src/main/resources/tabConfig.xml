@@ -1,32 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="configbn" class="generator.ExcelConfigBean">
-        <property name="groupConfigurations">
-            <list>
-                <bean class="generator.GroupConfigurationBean">
-                    <property name="title" value="Student Information"/>
-                    <property name="subtitle" value="Student Information"/>
-                    <property name="propertyConfigurations">
-                        <list>
-                            <bean class="generator.PropertyConfigurationBean">
-                                <property name="propertyName" value="userName1"/>
-                                <property name="displayName" value="Name:"/>
-                                <property name="fontStyle" value="normal"/>
-                            </bean>
-                            <bean class="generator.PropertyConfigurationBean">
-                                <property name="propertyName" value="address"/>
-                                <property name="displayName" value="Address"/>
-                                <property name="fontStyle" value="bold"/>
-                            </bean>
-                            <bean class="generator.PropertyConfigurationBean">
-                                <property name="propertyName" value="phone"/>
-                                <property name="displayName" value="Phone"/>
-                                <property name="fontStyle" value="bold"/>
-                            </bean>
-                        </list>
-                    </property>
-                </bean>
-            </list>
-        </property>
-    </bean>
-</beans>
+<excelConfigBean>
+<groupConfigurations>
+            <title>Student Information</title>
+            <subtitle>Student Information</subtitle>
+            <propertyConfigurations>
+                <propertyName>userName1</propertyName>
+                <displayName>Name</displayName>
+                <fontStyle>normal</fontStyle>
+            </propertyConfigurations>
+    <propertyConfigurations>
+        <propertyName>address</propertyName>
+        <displayName>Address</displayName>
+        <fontStyle>normal</fontStyle>
+    </propertyConfigurations>
+</groupConfigurations>
+</excelConfigBean>

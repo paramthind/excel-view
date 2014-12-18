@@ -1,10 +1,14 @@
 package generator;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+
 import java.util.List;
 
 /**
  * Created by paramveersingh on 12/16/14.
  */
+@XStreamAlias("groupConfigurationBean")
 public class GroupConfigurationBean {
     public String getTitle() {
         return title;
@@ -30,6 +34,10 @@ public class GroupConfigurationBean {
         this.propertyConfigurations = propertyConfigurations;
     }
 
-    private String title, subtitle;
+    @XStreamAlias("title")
+    private String title;
+    @XStreamAlias("subtitle")
+    private String subtitle;
+    @XStreamImplicit(itemFieldName = "propertyConfigurations")
     private List<PropertyConfigurationBean> propertyConfigurations;
 }

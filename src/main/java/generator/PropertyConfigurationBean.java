@@ -1,11 +1,21 @@
 package generator;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  * Created by paramveersingh on 12/16/14.
  */
+@XStreamAlias("propertyConfigurationBean")
 public class PropertyConfigurationBean {
 
-    private String propertyName, displayName, fontStyle, value;
+    @XStreamAlias("propertyName")
+    private String propertyName;
+    @XStreamAlias("displayName")
+    private String displayName;
+    @XStreamAlias("fontStyle")
+    private String fontStyle;
+    @XStreamAlias("value")
+    private String value;
 
     public String getPropertyName() {
         return propertyName;

@@ -1,13 +1,18 @@
 package generator;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+
 import java.util.List;
 
 /**
  * Created by paramveersingh on 12/16/14.
  */
+@XStreamAlias("excelConfigBean")
 public class ExcelConfigBean {
     private String titleFont = "Tahoma", subTitleFont = "Tahoma", normalFont = "Tahoma";
-    private float titleFontSize = 18, normalFontSize = 8;
+    private float titleFontSize = 18f, normalFontSize = 8f;
+
 
     public List<GroupConfigurationBean> getGroupConfigurations() {
         return groupConfigurations;
@@ -17,6 +22,7 @@ public class ExcelConfigBean {
         this.groupConfigurations = groupConfigurations;
     }
 
+    @XStreamImplicit(itemFieldName = "groupConfigurations")
     private List<GroupConfigurationBean> groupConfigurations;
 
     public String getTitleFont() {

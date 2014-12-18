@@ -3,17 +3,17 @@
  */
 package generator;
 
+import beans.TabBean;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Generator for excel workbook. It takes configuration from spring container.
@@ -30,17 +30,9 @@ public class ExcelGenerator {
 
     @SuppressWarnings("rawtypes")
     public ExcelGenerator(String configFile, String outFile) {
-        ApplicationContext ctx = new FileSystemXmlApplicationContext("file:"
-                + configFile);
         this.outFile = outFile;
-        Map beans = ctx.getBeansOfType(ExcelConfigBean.class);
-        if (beans.isEmpty()) {
-            throw new IllegalArgumentException("There is no ExcelConfigBean beans.");
-        }
-
-        Iterator it = beans.entrySet().iterator();
-        Map.Entry entry = (Map.Entry) it.next();
-        excelConfig = (ExcelConfigBean) entry.getValue();
+        XmlParser xmlParser = new XmlParser();
+        excelConfig = xmlParser.parse(configFile);
         this.workbook = new HSSFWorkbook();
     }
 
@@ -63,8 +55,7 @@ public class ExcelGenerator {
 
         // title font & style
         Font titleFont = workbook.createFont();
-        titleFont.setFontName(excelConfig.getTitleFont());
-        titleFont.setFontHeight((short) (excelConfig.getTitleFontSize() * 20));
+        titleFont.setFontHeight((short) (18 * 20));
         titleFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
         CellStyle titleStyle = workbook.createCellStyle();
         titleStyle.setFont(titleFont);
@@ -74,14 +65,9 @@ public class ExcelGenerator {
         // header font & style
         Font headerFont = workbook.createFont();
         headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-//        headerFont.setColor(IndexedColors.WHITE.getIndex());
         CellStyle headerStyle = workbook.createCellStyle();
         headerStyle.setFont(headerFont);
-//        headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-//        headerStyle.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
         headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-//        headerStyle.setBorderRight(CellStyle.BORDER_THIN);
-//        headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
 
         // total cell style
         CellStyle totalStyle = workbook.createCellStyle();
@@ -157,11 +143,7 @@ public class ExcelGenerator {
                 columnGreyStyles[propCount] = formatGreyStyle;
             }
             Cell cell = row.createCell(1);
-            if (currentRow % 2 == 0)
-                cell.setCellStyle(columnWhiteStyles[propCount]);
-//                    else {
-//                        cell.setCellStyle(columnGreyStyles[propCount]);
-//                    }
+            cell.setCellStyle(columnWhiteStyles[propCount]);
             setCellValue(cell, value);
 
             propCount++;
@@ -239,11 +221,14 @@ public class ExcelGenerator {
     }
 
     public static void main(String[] args) throws Exception {
-        ExcelGenerator excelGenerator = new ExcelGenerator(
-                "/Users/paramveersingh/Documents/work/intellijWorkspace/excel-view/src/main/resources/tabConfig.xml",
-                "tabWorkbook.xls");
-        excelGenerator.include(new TabBean());
-        excelGenerator.generate();
+        try {
+            ExcelGenerator excelGenerator = new ExcelGenerator(ExcelGenerator.class.getClassLoader()
+                    .getResource("tabConfig.xml").getFile(), "tabWorkbook.xls");
+            excelGenerator.include(new TabBean());
+            excelGenerator.generate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
